@@ -66,7 +66,7 @@ export class Helper<RD = any> implements Helper.Controller {
     }
 
     updateRoomData: Helper.UpdateRoomData<RD> = (roomId, data) => {
-        const roomIndex = this.rooms.findIndex(room => roomId === roomId);
+        const roomIndex = this.rooms.findIndex(room => room.id === roomId);
 
         this.rooms[roomIndex].data = data;
     }
