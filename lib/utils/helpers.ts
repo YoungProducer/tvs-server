@@ -32,7 +32,7 @@ export class Helper<RD = any> implements Helper.Controller {
     rooms: Helper.Room<RD>[] = [];
 
     addRoom: Helper.AddRoom<RD> = (user) => {
-        const roomId = makeId(10);
+        const roomId = makeId(20);
 
         const newRoom: Helper.Room<RD> = {
             id: roomId,
