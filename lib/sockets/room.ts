@@ -32,25 +32,6 @@ export class RoomSocket {
 
         namespace.on('connection', async (socket) => {
             socket.on(
-                'create-room',
-                async ({ username }: RoomSocket.CreateRoomPayload) => {
-                    const newRoom = helper.addRoom({
-                        name: username,
-                        socketId: socket.id,
-                    });
-
-                    socket.join(newRoom.id);
-
-                    this.instance
-                        .of('/rooms')
-                        .to(socket.id)
-                        .emit(
-                            'create-room-response',
-                            newRoom.id,
-                        );
-                });
-
-            socket.on(
                 'join-room',
                 async ({ roomId, username }: RoomSocket.JoinRoomPayload) => {
                     const user: Helper.User = {
