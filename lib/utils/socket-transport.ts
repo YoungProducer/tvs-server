@@ -10,7 +10,7 @@ export namespace SocketTransport {
     }
 }
 
-class SocketTransport implements SocketTransport.Controller {
+export class SocketTransport implements SocketTransport.Controller {
     instance: Server;
 
     constructor(socket: Server) {
