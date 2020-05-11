@@ -2,7 +2,10 @@ import { Server, Namespace } from 'socket.io';
 
 export namespace SocketTransport {
     export type EmitEvent = <T = any>(eventName: string, data: T, to?: string) => void;
-    export type ListenEvent = (eventName: string, cb: () => void) => void;
+    export type ListenEvent = (
+        eventName: string,
+        cb: (...args: any) => void | Promise<void>,
+    ) => void;
     export type UseNamespace = (name: string) => void;
     export type EmitEventToNamespace = <T = any>(
         namespaceName: string,
@@ -13,11 +16,12 @@ export namespace SocketTransport {
     export type ListenEventOfNamespace = (
         namespaceName: string,
         eventName: string,
-        cb: () => void,
+        cb: (...args: any) => void | Promise<void>,
         to?: string,
     ) => void;
 
     export interface Controller {
+        instance: Server;
         emitEvent: EmitEvent;
         listenEvent: ListenEvent;
         useNamespace: UseNamespace;
