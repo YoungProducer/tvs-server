@@ -3,12 +3,12 @@ import { Server, Client } from 'socket.io';
 import { Helper } from '../utils/helpers';
 import { SocketTransport } from '../utils/socket-transport';
 
-const helper = new Helper<string>();
+export const helper = new Helper<string>();
 
 export namespace RoomSocket {
-    export interface JoinRoomCbPayload {
+    export interface JoinRoomPayload {
         roomId: string;
-        user: string;
+        username: string;
     }
 
     export interface CreateRoomPayload {
@@ -49,6 +49,28 @@ export class RoomSocket {
                             newRoom.id,
                         );
                 });
+
+            socket.on(
+                'join-room',
+                async ({ roomId, username }: RoomSocket.JoinRoomPayload) => {
+                    const user: Helper.User = {
+                        name: username,
+                        socketId: socket.id,
+                    };
+
+                    helper.addUserToRoom(roomId, user);
+
+                    socket.join(roomId);
+
+                    namespace
+                        .to(socket.id)
+                        .emit('join-room-response', 'Success!');
+
+                    namespace
+                        .to(roomId)
+                        .emit('join-room-response', { username });
+                },
+            );
         });
     }
 }
