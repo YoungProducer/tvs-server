@@ -12,7 +12,7 @@ export namespace Helper {
         data?: T;
     }
 
-    export type AddRoom = (user: User) => void;
+    export type AddRoom<T = any> = (user: User) => Room<T>;
     export type RemoveRoom = (roomId: string) => void;
     export type AddUserToRoom = (roomId: string, user: User) => void;
     export type UpdateRoomData<T = any> = (roomId: string, data: T) => void;
@@ -31,13 +31,17 @@ export namespace Helper {
 export class Helper<RD = any> implements Helper.Controller {
     rooms: Helper.Room<RD>[] = [];
 
-    addRoom: Helper.AddRoom = (user) => {
+    addRoom: Helper.AddRoom<RD> = (user) => {
         const roomId = makeId(10);
 
-        this.rooms.push({
+        const newRoom: Helper.Room<RD> = {
             id: roomId,
             users: [user],
-        });
+        };
+
+        this.rooms.push(newRoom);
+
+        return newRoom;
     }
 
     removeRoom: Helper.RemoveRoom = (roomId) => {
