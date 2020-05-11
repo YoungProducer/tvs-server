@@ -28,27 +28,27 @@ export class RoomSocket {
     }
 
     socketEvents() {
-        this.instance
-            .of('/rooms')
-            .on('connection', async (socket) => {
-                socket.on(
-                    'create-room',
-                    async ({ username }: RoomSocket.CreateRoomPayload) => {
-                        const newRoom = helper.addRoom({
-                            name: username,
-                            socketId: socket.id,
-                        });
+        const namespace = this.instance.of(this.namespaceName);
 
-                        socket.join(newRoom.id);
-
-                        this.instance
-                            .of('/rooms')
-                            .to(socket.id)
-                            .emit(
-                                'create-room-response',
-                                newRoom.id,
-                            );
+        namespace.on('connection', async (socket) => {
+            socket.on(
+                'create-room',
+                async ({ username }: RoomSocket.CreateRoomPayload) => {
+                    const newRoom = helper.addRoom({
+                        name: username,
+                        socketId: socket.id,
                     });
-            });
+
+                    socket.join(newRoom.id);
+
+                    this.instance
+                        .of('/rooms')
+                        .to(socket.id)
+                        .emit(
+                            'create-room-response',
+                            newRoom.id,
+                        );
+                });
+        });
     }
 }
