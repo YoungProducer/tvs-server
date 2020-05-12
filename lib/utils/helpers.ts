@@ -58,7 +58,12 @@ export class Helper<RD = any> implements Helper.Controller {
     addUserToRoom: Helper.AddUserToRoom = (roomId, user) => {
         const roomIndex = this.rooms.findIndex(room => room.id === roomId);
 
-        this.rooms[roomIndex].users.push(user);
+        const room = this.rooms[roomIndex];
+        room.users.push(user);
+
+        this.rooms[roomIndex] = room;
+
+        return room;
     }
 
     removeUserFromRoom: Helper.RemoveUserFromRoom = (roomId, username) => {

@@ -39,17 +39,13 @@ export class RoomSocket {
                         socketId: socket.id,
                     };
 
-                    helper.addUserToRoom(roomId, user);
+                    const room = helper.addUserToRoom(roomId, user);
 
                     socket.join(roomId);
 
                     namespace
-                        .to(socket.id)
-                        .emit('join-room-response', 'Success!');
-
-                    namespace
                         .to(roomId)
-                        .emit('join-room-response', { username });
+                        .emit('join-room-response', room);
                 },
             );
         });
