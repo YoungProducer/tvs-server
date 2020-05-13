@@ -12,11 +12,13 @@ export const server = new Server(app);
 export const io = socket(server);
 
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000', 'https://tvs-client.000webhostapp.com/dashboard'],
     methods: ["POST"],
     credentials: true,
     maxAge: 3600,
 };
+
+console.log(process.env.PORT);
 
 app.set('PORT', process.env.PORT);
 
