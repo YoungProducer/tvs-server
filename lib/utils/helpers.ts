@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import { makeId } from './make-id';
 
 export namespace Helper {
@@ -33,7 +35,7 @@ export class Helper<RD = any> implements Helper.Controller {
     rooms: Helper.Room<RD>[] = [];
 
     addRoom: Helper.AddRoom<RD> = (name) => {
-        const roomId = makeId(20);
+        const roomId = uuidv4();
 
         const newRoom: Helper.Room<RD> = {
             name,
