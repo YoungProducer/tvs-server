@@ -12,7 +12,7 @@ export const server = new Server(app);
 export const io = socket(server);
 
 const corsOptions = {
-    origin: ['http://localhost:3000', 'https://tvs-client.000webhostapp.com/dashboard'],
+    origin: ['http://localhost:3000', 'https://tvs-client.000webhostapp.com'],
     methods: ["POST"],
     credentials: true,
     maxAge: 3600,
