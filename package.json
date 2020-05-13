@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "node bin/app.js",
+    "start": "NODE_ENV=production node bin/app.js",
     "build": "rm -rf ./dist && tsc",
     "dev": "ts-node-dev --no-notify --respawn --transpileOnly ./bin/app.js"
   },
