@@ -1,7 +1,6 @@
-import { Server, Client } from 'socket.io';
+import { Server } from 'socket.io';
 
 import { Helper } from '../utils/helpers';
-import { SocketTransport } from '../utils/socket-transport';
 
 export const helper = new Helper<string>();
 
@@ -22,14 +21,11 @@ export namespace RoomSocket {
 }
 
 export class RoomSocket {
-    // socketTransport!: SocketTransport.Controller;
     instance: Server;
     namespaceName: string = '/rooms';
 
     constructor(socket: Server) {
         this.instance = socket;
-        // this.socketTransport = new SocketTransport(socket);
-        // this.socketTransport.useNamespace('/room');
     }
 
     socketEvents() {
