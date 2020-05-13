@@ -3,11 +3,9 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import socket from 'socket.io';
 import { Server } from 'http';
-import dotenv from 'dotenv';
 
 import { appRouter } from './routes';
 import { RoomSocket } from './sockets/room';
-import { parseEnv, EnvConfigInput } from './utils/parse-env';
 
 const app: express.Application = express();
 export const server = new Server(app);
@@ -20,9 +18,7 @@ const corsOptions = {
     maxAge: 3600,
 };
 
-const envConfig = dotenv.config() as EnvConfigInput;
-
-parseEnv(app, envConfig);
+app.set('PORT', process.env.PORT);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
