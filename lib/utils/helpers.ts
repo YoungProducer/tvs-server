@@ -1,7 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { makeId } from './make-id';
-
 export namespace Helper {
     export interface User {
         name: string;
