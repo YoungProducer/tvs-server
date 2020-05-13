@@ -14,6 +14,11 @@ export namespace RoomSocket {
     export interface CreateRoomPayload {
         username: string;
     }
+
+    export interface TextChange {
+        roomId: string;
+        value: string;
+    }
 }
 
 export class RoomSocket {
@@ -46,6 +51,20 @@ export class RoomSocket {
                     namespace
                         .to(roomId)
                         .emit('join-room-response', room);
+                },
+            );
+
+            socket.on(
+                'text-change',
+                async ({ roomId, value }: RoomSocket.TextChange) => {
+                    const room = helper.updateRoomData(roomId, value);
+
+                    const newData = room.data;
+
+                    socket
+                        .broadcast
+                        .to(roomId)
+                        .emit('text-change-response', newData);
                 },
             );
         });

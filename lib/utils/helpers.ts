@@ -16,7 +16,7 @@ export namespace Helper {
     export type AddRoom<T = any> = (name: string) => Room<T>;
     export type RemoveRoom = (roomId: string) => void;
     export type AddUserToRoom = (roomId: string, user: User) => void;
-    export type UpdateRoomData<T = any> = (roomId: string, data: T) => void;
+    export type UpdateRoomData<T = any> = (roomId: string, data: T) => Room<T>;
     export type RemoveUserFromRoom = (roomId: string, username: string) => void;
 
     /** RD - type of Room Data */
@@ -78,7 +78,12 @@ export class Helper<RD = any> implements Helper.Controller {
 
     updateRoomData: Helper.UpdateRoomData<RD> = (roomId, data) => {
         const roomIndex = this.rooms.findIndex(room => room.id === roomId);
+        const room = this.rooms[roomIndex];
 
-        this.rooms[roomIndex].data = data;
+        room.data = data;
+
+        this.rooms[roomIndex] = room;
+
+        return room;
     }
 }
